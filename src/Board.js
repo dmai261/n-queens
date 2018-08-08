@@ -148,7 +148,7 @@
         if (rows[i][newColIndex] && rows[i][newColIndex] === 1) {
           cache.push(1);
         }
-          newColIndex++;
+        newColIndex++;
       }
       if (cache.length > 1) {
         return true;
@@ -163,7 +163,7 @@
         var currentRow = rows[i];
         for (let j = 0; j < currentRow.length; j++) {
           if (currentRow[j] === 1) {
-            if (this.hasMajorDiagonalConflictAt(j-i)) {
+            if (this.hasMajorDiagonalConflictAt(j - i)) {
               return true;
             }
           }
@@ -186,7 +186,7 @@
         if (rows[i][newColIndex] && rows[i][newColIndex] === 1) {
           cache.push(1);
         }
-          newColIndex--;
+        newColIndex--;
       }
       if (cache.length > 1) {
         return true;
@@ -201,7 +201,7 @@
         var currentRow = rows[i];
         for (let j = 0; j < currentRow.length; j++) {
           if (currentRow[j] === 1) {
-            if (this.hasMinorDiagonalConflictAt(j+i)) {
+            if (this.hasMinorDiagonalConflictAt(j + i)) {
               return true;
             }
           }
