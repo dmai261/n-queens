@@ -62,14 +62,14 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
     \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
     |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+  */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -140,15 +140,18 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(rowIndex, colIndex) {
+    hasMajorDiagonalConflictAt: function(indexInFirstRow) {
       var rows = this.rows();
-      var currentRow = rows[rowIndex];
-      var newColIndex = colIndex;
-      for (let i = rowIndex + 1; i < rows.length; i++) {
-        newColIndex++;
+      var cache = [];
+      var newColIndex = indexInFirstRow;
+      for (let i = 0; i < rows.length; i++) {
         if (rows[i][newColIndex] && rows[i][newColIndex] === 1) {
-          return true;
+          cache.push(1);
         }
+          newColIndex++;
+      }
+      if (cache.length > 1) {
+        return true;
       }
       return false;
     },
@@ -160,7 +163,7 @@
         var currentRow = rows[i];
         for (let j = 0; j < currentRow.length; j++) {
           if (currentRow[j] === 1) {
-            if (this.hasMajorDiagonalConflictAt(i, j)) {
+            if (this.hasMajorDiagonalConflictAt(j-i)) {
               return true;
             }
           }
@@ -175,15 +178,18 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(rowIndex, colIndex) {
+    hasMinorDiagonalConflictAt: function(indexInFirstRow) {
       var rows = this.rows();
-      var currentRow = rows[rowIndex];
-      var newColIndex = colIndex;
-      for (let i = rowIndex + 1; i < rows.length; i++) {
-        newColIndex--;
+      var cache = [];
+      var newColIndex = indexInFirstRow;
+      for (let i = 0; i < rows.length; i++) {
         if (rows[i][newColIndex] && rows[i][newColIndex] === 1) {
-          return true;
+          cache.push(1);
         }
+          newColIndex--;
+      }
+      if (cache.length > 1) {
+        return true;
       }
       return false;
     },
@@ -195,7 +201,7 @@
         var currentRow = rows[i];
         for (let j = 0; j < currentRow.length; j++) {
           if (currentRow[j] === 1) {
-            if (this.hasMinorDiagonalConflictAt(i, j)) {
+            if (this.hasMinorDiagonalConflictAt(j+i)) {
               return true;
             }
           }
