@@ -126,9 +126,11 @@
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       const rows = this.rows();
-      for (let i = 0; i < rows[0].length; i++) {
-        if (this.hasColConflictAt(i)) {
-          return true;
+      if (rows.length) {
+        for (let i = 0; i < rows[0].length; i++) {
+          if (this.hasColConflictAt(i)) {
+            return true;
+          }
         }
       }
       return false; // fixme
