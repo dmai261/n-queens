@@ -5,7 +5,7 @@
 (function() {
 
   window.Board = Backbone.Model.extend({
-
+    //time complexity: best case: O(1), worst case O(n); 
     initialize: function (params) {
       if (_.isUndefined(params) || _.isNull(params)) {
         console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
@@ -17,30 +17,36 @@
         this.set('n', params.length);
       }
     },
-
+    
+    //time complexity: O(n);
     rows: function() {
       return _(_.range(this.get('n'))).map(function(rowIndex) {
         return this.get(rowIndex);
       }, this);
     },
-
+    
+    //time complexity: O(1);
     togglePiece: function(rowIndex, colIndex) {
       this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
       this.trigger('change');
     },
-
+    
+    //time complexity: O(1);
     _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
       return colIndex - rowIndex;
     },
-
+    
+    //time complexity: O(1);
     _getFirstRowColumnIndexForMinorDiagonalOn: function(rowIndex, colIndex) {
       return colIndex + rowIndex;
     },
-
+    
+    //time complexity: O(n);
     hasAnyRooksConflicts: function() {
       return this.hasAnyRowConflicts() || this.hasAnyColConflicts();
     },
-
+    
+    //time complexity: O(n);
     hasAnyQueenConflictsOn: function(rowIndex, colIndex) {
       return (
         this.hasRowConflictAt(rowIndex) ||
@@ -49,11 +55,12 @@
         this.hasMinorDiagonalConflictAt(this._getFirstRowColumnIndexForMinorDiagonalOn(rowIndex, colIndex))
       );
     },
-
+    //time complexity: O(n);
     hasAnyQueensConflicts: function() {
       return this.hasAnyRooksConflicts() || this.hasAnyMajorDiagonalConflicts() || this.hasAnyMinorDiagonalConflicts();
     },
-
+    
+    //time complexity: O(1);
     _isInBounds: function(rowIndex, colIndex) {
       return (
         0 <= rowIndex && rowIndex < this.get('n') &&
@@ -77,6 +84,8 @@
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
+    
+    //time complexity: O(n^2);
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
       const currentRow = this.get(rowIndex);
@@ -91,7 +100,8 @@
       }
       return false;
     },
-
+    
+    //time complexity: O(n^2);
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       const rows = this.rows();
@@ -108,6 +118,7 @@
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
+    //time complexity: O(n);
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       const cache = [];
@@ -122,7 +133,8 @@
       }
       return false;
     },
-
+    
+    //time complexity: O(n);
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       const rows = this.rows();
@@ -141,6 +153,7 @@
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
+    //time complexity: O(n);
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(indexInFirstRow) {
       var rows = this.rows();
@@ -157,7 +170,8 @@
       }
       return false;
     },
-
+    
+    //time complexity: O(n^2)
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       var rows = this.rows();
@@ -179,6 +193,8 @@
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
+    
+    //time complexity: O(n)
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(indexInFirstRow) {
       var rows = this.rows();
@@ -196,6 +212,7 @@
       return false;
     },
 
+    //time complexity: O(n^2);
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var rows = this.rows();
@@ -216,7 +233,8 @@
 
 
   });
-
+  
+  
   var makeEmptyMatrix = function(n) {
     return _(_.range(n)).map(function() {
       return _(_.range(n)).map(function() {
